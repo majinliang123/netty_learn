@@ -801,6 +801,10 @@ public final class NioEventLoop extends SingleThreadEventLoop {
                     break;
                 }
 
+                /**
+                 * Check if there is jdk epoll bug,
+                 * if so, call {@link #rebuildSelector()} to re-build seletor
+                 */
                 long time = System.nanoTime();
                 if (time - TimeUnit.MILLISECONDS.toNanos(timeoutMillis) >= currentTimeNanos) {
                     // timeoutMillis elapsed without anything selected.

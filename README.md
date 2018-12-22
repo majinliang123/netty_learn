@@ -10,4 +10,6 @@ branch: netty_learn
 - Nio Server的运行方式
 - 长连接是怎么工作的
 - netty是怎么解决jdk本身存在的epoll bug的
+Netty 解决/规避了JDK的NIO bug了吗
+https://www.zhihu.com/question/291370310/answer/479058756
 - netty是如何使用direct buffer的
