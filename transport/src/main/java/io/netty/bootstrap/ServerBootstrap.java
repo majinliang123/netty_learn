@@ -175,6 +175,11 @@ public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerCh
                     pipeline.addLast(handler);
                 }
 
+                /**
+                 * Add {@link ServerBootstrapAcceptor} as handler here.
+                 * {@link ServerBootstrapAcceptor} could register a channel to a {@link childGroup}.
+                 * {@link childGroup} will add child handler into it when channelRead function is called.
+                 */
                 ch.eventLoop().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -238,6 +243,10 @@ public class ServerBootstrap extends AbstractBootstrap<ServerBootstrap, ServerCh
             };
         }
 
+        /**
+         * Very important function.
+         * Here register child event loop group the {@link Channel}
+         */
         @Override
         @SuppressWarnings("unchecked")
         public void channelRead(ChannelHandlerContext ctx, Object msg) {

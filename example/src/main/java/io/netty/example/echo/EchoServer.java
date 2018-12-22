@@ -54,11 +54,11 @@ public final class EchoServer {
         final EchoServerHandler serverHandler = new EchoServerHandler();
         try {
             ServerBootstrap b = new ServerBootstrap();
-            b.group(bossGroup, workerGroup)
-             .channel(NioServerSocketChannel.class)
-             .option(ChannelOption.SO_BACKLOG, 100)
-             .handler(new LoggingHandler(LogLevel.INFO))
-             .childHandler(new ChannelInitializer<SocketChannel>() {
+            b.group(bossGroup, workerGroup) // worker group at ServerBootstrap, boss group at AbstractBootstap.
+             .channel(NioServerSocketChannel.class) // AbstractBootstap
+             .option(ChannelOption.SO_BACKLOG, 100) // AbstractBootstap
+             .handler(new LoggingHandler(LogLevel.INFO)) // AbstractBootstap
+             .childHandler(new ChannelInitializer<SocketChannel>() { // ServerBootstrap
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
                      ChannelPipeline p = ch.pipeline();

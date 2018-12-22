@@ -402,6 +402,13 @@ public final class NioEventLoop extends SingleThreadEventLoop {
         for (;;) {
             try {
                 try {
+                    /**
+                     * hasTask will check how many selectkeys at selector.
+                     * If there are many selectkeys, will directly call selectNow function
+                     * will go to default.
+                     *
+                     * If there are no selectkeys, will return SelectStrategy.SELECT
+                     */
                     switch (selectStrategy.calculateStrategy(selectNowSupplier, hasTasks())) {
                     case SelectStrategy.CONTINUE:
                         continue;
@@ -606,6 +613,13 @@ public final class NioEventLoop extends SingleThreadEventLoop {
         }
     }
 
+    /**
+     * When the key is acceptable status, the ch is a {@link io.netty.channel.socket.nio.NioServerSocketChannel}
+     * When the key is readable status, the ch is {@link io.netty.channel.socket.nio.NioSocketChannel}
+     *
+     * And when the key status changed, the instance of {@link NioEventLoop} also changed.
+     * So when the key is acceptable status and readable status, the instance of {@link NioEventLoop} is different.
+     */
     private void processSelectedKey(SelectionKey k, AbstractNioChannel ch) {
         final AbstractNioChannel.NioUnsafe unsafe = ch.unsafe();
         if (!k.isValid()) {

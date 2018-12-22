@@ -73,6 +73,11 @@ public abstract class MultithreadEventExecutorGroup extends AbstractEventExecuto
         }
 
         if (executor == null) {
+
+            /**
+             * When a new {@link Runnable} is execute by {@link Executor}.
+             * executor will create a new thread and start it.
+             */
             executor = new ThreadPerTaskExecutor(newDefaultThreadFactory());
         }
 
@@ -81,6 +86,9 @@ public abstract class MultithreadEventExecutorGroup extends AbstractEventExecuto
         for (int i = 0; i < nThreads; i ++) {
             boolean success = false;
             try {
+                /**
+                 * children is instance of {@link NioEventLoop}
+                 */
                 children[i] = newChild(executor, args);
                 success = true;
             } catch (Exception e) {
